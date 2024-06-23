@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superhero Selection</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_dash.css') }}">
+</head>
+<body>
+    <h2>Dashboard</h2>
+    <button type="button" style="margin-left: 25px; margin-top: 25px; display: none;" class="btn btn-success thumb-up-btn" onclick="handleThumbUp()">
+        Thumb Up <span id="thumbUpCount">0</span>
+    </button>
+    <div class="dashboard">
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead id="superheroTableHead">
+
+                </thead>
+                <tbody id="superheroTableBody">
+
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+    <div class="container">
+        <div class="form-container">
+            <h1>Superhero Selection</h1>
+            <div class="dropdown">
+                <label style="margin-left: 30px;" for="superhero">Select Superhero:</label>
+                <button type="button" onclick="toggleDropdown(event, 'superheroDropdown')" class="btn btn-primary dropdown-toggle" id="superheroButton">Select Superhero</button>
+                <div id="superheroDropdown" class="dropdown-menu">
+                    <input type="text" placeholder="Search.." id="superheroInput" class="form-control" onkeyup="filterFunction('superheroInput', 'superheroDropdown')">
+                    {% for superhero in superheroes %}
+                    <a href="#" class="dropdown-item" onclick="selectOption('superhero', '{{ superhero }}')">{{ superhero }}</a>
+                    {% endfor %}
+                    <input type="hidden" id="superhero" name="superhero">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="chartModal" class="modal">
+        <div  class="modal-content">
+            <span class="close">&times;</span>
+            <canvas id="killsChartModal"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

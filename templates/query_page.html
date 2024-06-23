@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Superhero Email Query</h1>
+        <form action="/query" method="post">
+            <div class="dropdown">
+                <label for="country">Country:</label>
+                <button type="button" onclick="toggleDropdown(event, 'countryDropdown')" class="dropbtn" id="countryButton">Select Country</button>
+                <div id="countryDropdown" class="dropdown-content">
+                    <input type="text" placeholder="Search.." id="countryInput" onkeyup="filterFunction('countryInput', 'countryDropdown')">
+                    {% for country in countries %}
+                    <a href="javascript:void(0)" onclick="selectOption('country', '{{ country }}')">{{ country }}</a>
+                    {% endfor %}
+                </div>
+                <input type="hidden" id="country" name="country">
+            </div>
+            <br><br>
+            <div class="dropdown">
+                <label for="invader_species">Invader Species:</label>
+                <button type="button" onclick="toggleDropdown(event, 'invader_speciesDropdown')" class="dropbtn" id="invader_speciesButton">Select Invader Species</button>
+                <div id="invader_speciesDropdown" class="dropdown-content">
+                    <input type="text" placeholder="Search.." id="invader_speciesInput" onkeyup="filterFunction('invader_speciesInput', 'invader_speciesDropdown')">
+                    {% for species in invader_species %}
+                    <a href="javascript:void(0)" onclick="selectOption('invader_species', '{{ species }}')">{{ species }}</a>
+                    {% endfor %}
+                </div>
+                <input type="hidden" id="invader_species" name="invader_species">
+            </div>
+            <br><br>
+            <div class="dropdown">
+                <label for="role">Role:</label>
+                <button type="button" onclick="toggleDropdown(event, 'roleDropdown')" class="dropbtn" id="roleButton">Select Role</button>
+                <div id="roleDropdown" class="dropdown-content">
+                    <input type="text" placeholder="Search.." id="roleInput" onkeyup="filterFunction('roleInput', 'roleDropdown')">
+                    {% for role in roles %}
+                    <a href="javascript:void(0)" onclick="selectOption('role', '{{ role }}')">{{ role }}</a>
+                    {% endfor %}
+                </div>
+                <input type="hidden" id="role" name="role">
+            </div>
+            <br><br>
+            <button type="submit" class="query-button">Query</button>
+        </form>
+
+        {% if emails %}
+            <h2>Superhero Emails:</h2>
+            <ul>
+                {% for email in emails %}
+                    <li>{{ email }}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                {% if not start %}
+                    <p>No emails found.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
